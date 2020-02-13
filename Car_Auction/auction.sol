@@ -5,8 +5,8 @@ contract Auction {
 // 경매 소유자(자동차 소유자)의 이더리움 주소. 경매가 끝난후 매각가를 송금할 주소.
 address internal auction_owner;
 // 경매 시작과 종료시각.
-uint256 public auction_start;
-uint256 public auction_end;
+uint256 public charge_start;
+uint256 public charge_end;
 // 현재까지 최고 매수 신청액으로 단위는 ETH이다.
 uint256 public highestBid;
 // 최고 매수 신청액애 해당하는 경매 참가자의 이더리움 주소.
@@ -39,7 +39,7 @@ struct  car{
 
     // 첫 수정자는 경매가 여전히 열려있는지(진행중인지) 점검.
     modifier an_ongoing_auction(){
-        require(now <= auction_end);
+        require(now <= charge_end);
         _;
     }
     
@@ -61,7 +61,7 @@ struct  car{
     function withdraw() public returns (bool){}
     // 경매 소유자가 자신이 시작한 경매를 취소하는 데 쓰인다.
     function cancel_auction() external returns (bool){}
-    function MyAuction (uint _biddingTime, address _owner,string _brand,string _Rnumber) public {}
+    function MyCarIF (uint _biddingTime, address _owner,string _brand,string _Rnumber) public {}
     
     event BidEvent(address indexed highestBidder, uint256 highestBid);
     event WithdrawalEvent(address withdrawer, uint256 amount);
@@ -79,10 +79,10 @@ contract MyAuction is Auction{
     }
     
   
-function MyAuction (uint _biddingTime, address _owner,string _brand,string _Rnumber) public {
+function MyCarIF (uint _biddingTime, address _owner,string _brand,string _Rnumber) public {
         auction_owner = _owner;
-        auction_start=now;
-        auction_end = auction_start + _biddingTime*1  hours;
+        charge_start=now;
+        charge_end = charge_start + _biddingTime*1  hours;
         STATE=auction_state.STARTED;
         Mycar.Brand=_brand;
         Mycar.Rnumber=_Rnumber;
@@ -115,7 +115,7 @@ function cancel_auction() external only_owner  an_ongoing_auction returns (bool)
     
 function destruct_auction() external only_owner returns (bool){
         
-    require(now > auction_end,"You can't destruct the contract,The auction is still open");
+    require(now > charge_end,"You can't destruct the contract,The auction is still open");
      for(uint i=0;i<bidders.length;i++)
     {
         assert(bids[bidders[i]]==0);
@@ -128,7 +128,7 @@ function destruct_auction() external only_owner returns (bool){
 
     
 function withdraw() public returns (bool){
-        require(now > auction_end ,"You can't withdraw, the auction is still open");
+        require(now > charge_end ,"You can't withdraw, the auction is still open");
         uint amount;
 
         amount=bids[msg.sender];
