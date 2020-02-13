@@ -2,14 +2,14 @@ pragma solidity ^0.6.1;
 
 contract Auction {
 
-// 경매 소유자(자동차 소유자)의 이더리움 주소. 경매가 끝난후 매각가를 송금할 주소.
+// 자동차 소유자의 주소 변수 
 address internal auction_owner;
-// 경매 시작과 종료시각.
+// 충전 시작과 끝나는 시간 변수
 uint256 public charge_start;
 uint256 public charge_end;
-// 현재까지 최고 매수 신청액으로 단위는 ETH이다.
+// 현재까지 최고 할인가격으로 단위는 ETH이다.
 uint256 public highestBid;
-// 최고 매수 신청액애 해당하는 경매 참가자의 이더리움 주소.
+// 최고 할인가를 말하는 참가자의 이더리움 주소.
 address public highestBidder;
  
 // 열거형 자료형식 , 일련의 명명된 상수들로 구성되어 있음.(ENUMERATION TYPE)
@@ -27,17 +27,17 @@ struct  car{
     string  Rnumber;
 }
     car public Mycar;
-    // 모든 매수 신청자의 주소를 담는 동적배열
+    // 모든 에너지 판매하는 신청자의 주소를 담는 동적배열
     address[] bidders;
-    // 각 경매 참가자의 주소를 그 참가자가 부른 가격으로 사상하는 매핑객체 자료구조.
+    // 각 에너지 판매자의 주소를 그 참가자가 부른 가격으로 사상하는 매핑객체 자료구조.
     mapping(address => uint) public bids;
-    // 경매의 상태(진행 중인지 , 취소되었는지)를 나타낸다. 열거형 형식의 공용변수 State(cancelled, stated)
+    // 충전 상태(진행 중인지 , 취소되었는지)를 나타낸다. 열거형 형식의 공용변수 State(cancelled, stated)
     auction_state public STATE;
 
     // 함수 수정자(function modifier) 다른 함수의 행동을 수정하는 데 쓰인다.
     // 수정자 본문의 밑줄(_)는 수정자가 적용된 함수의 본문으로 대체됨
 
-    // 첫 수정자는 경매가 여전히 열려있는지(진행중인지) 점검.
+    // 첫 수정자는 충전 중인지 점검.
     modifier an_ongoing_auction(){
         require(now <= charge_end);
         _;
@@ -55,11 +55,11 @@ struct  car{
     // pure : 이 지정자는 좀 더 엄격한 조건을 명시하는 것으로 , 함수가 계약에 저장된 상태를 변경하기는커녕 읽지도 않음을 뜻함.
     // payable : 이 지정자는 함수가 이더를 받을 수 있음을 뜻한
    
-    // 호가, 참가자가 매수신청액을 지정하는데 쓰임. 이 예제에서는 누적방식의 경매호가 즉, 최고가를 부른 참가자를 이기려면 다음번 호가에서 절대금액이 아닌 추가분을 불러야함
+    // 최고할인를 부른 참가자를 이기려면 다음번에 할인금액 더 불러야함.
     function bid() public payable returns (bool){}
-    // 경매가 끝났을 때 참가자가 자신의 매수 신청액을 회수하는 데 쓰인다.
+    // 할인경매가 끝났을 때 참가자가 자신의 매수 신청액을 회수하는 데 쓰인다.
     function withdraw() public returns (bool){}
-    // 경매 소유자가 자신이 시작한 경매를 취소하는 데 쓰인다.
+    // 할인경매 소유자가 자신이 시작한 경매를 취소하는 데 쓰인다.
     function cancel_auction() external returns (bool){}
     function MyCarIF (uint _biddingTime, address _owner,string _brand,string _Rnumber) public {}
     
