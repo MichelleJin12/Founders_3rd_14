@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -118,7 +119,7 @@ paymentSheet();
         sendSmartContractBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                sendsmartcontract();
             }
 
 
@@ -210,7 +211,7 @@ paymentSheet();
         );
 
         webView.init(ethereumService, accounts.get(0),this);
-        webView.loadUrl("https://faucet.metamask.io/");
+        webView.loadUrl("file:///android_asset/www/index.html");
     }
     private void generate() {
         CoinNetworkInfo coinNetworkInfo = new CoinNetworkInfo(
@@ -238,6 +239,10 @@ paymentSheet();
 
                     }
                 });
+    }
+
+    public void sendsmartcontract() {
+
     }
 
 
@@ -295,4 +300,6 @@ paymentSheet();
 
         webView.onActivityResult(requestCode, resultCode, data);
     }
+
+
 }
