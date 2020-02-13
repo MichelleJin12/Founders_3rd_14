@@ -1,0 +1,64 @@
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
+<!--script src="bower_components/abi-decoder/dist/abi-decoder.js"></script-->
+
+<script src="./auction.js"></script>
+</head>
+<body onload="init()" style="background-color:#1E3269">
+    <div class="col-lg-12">
+        <div class="page-header" style="background-color:mediumvioletred">
+            <h3 style="color :mediumspringgreen">U_Station Dapp</h3>
+        </div>
+        <div class="col-lg-6">
+            <div class="well" style="background-color:mediumvioletred">                 
+  <div>
+<legend class="lead" style="color :mediumspringgreen">My Car Details</legend>
+<label class="lead" style="color :mediumspringgreen"> Brand: Tesla Model 3</label><text id='car_brand'></text><br>
+<label class="lead" style="color :mediumspringgreen">Registration Number: 82C4518</label><text id='registration_number'></text>
+</div> 
+                <legend class="lead" style="color :mediumspringgreen">Desired Price: ex) 1000 ETH</legend>
+                <small>eg. 10 ETH</small>
+                <div class="form-group">
+                    <input class="form-control" type="text" id="value" value="10" ></input>
+                    <text id="valueValidation"></text>
+                </div>
+           
+                <div>
+                    <button class="btn btn-default" id="transfer" type="button" onClick="bid()" style="color :mediumspringgreen">Discount!</button><br>
+                    <text id="biding_status"></text>					
+                </div>
+            </div> 
+        </div>		
+        <div class="col-lg-6">
+            <div class="well" style="background-color:mediumvioletred">
+                <div>
+                    <legend class="lead" style="color :mediumspringgreen">Charging Details</legend>
+                </div>
+                <div>
+                    <ul id='transfers'>
+					<li><label class="lead" style="color :mediumspringgreen">Charging End Time: </label> <text id="auction_end"></text></li>
+                    <li><label class="lead" style="color :mediumspringgreen">Auction Highest Bargain: </label> <text id="HighestBid"></text></li>
+                    <!--돈 냄? 돈내놔!!!!!!!!!!! 용돈줘!!!!!!!!!!-->
+					<li><label class="lead" style="color :mediumspringgreen">Did i payed?: </label> <text id="MyBid"></text></li>
+                    <li><label class="lead" style="color :mediumspringgreen">Th Highest Bargainer Address: </label> <text id="HighestBidder"></text></li>
+                    <!--charging status == 충전 중인지 true || false-->
+					<li><label class="lead" style="color :mediumspringgreen">Charging Status: </label> <text id="STATE"></text></li>					
+					</ul>
+                </div>							 					<br>				  <div>
+				      <legend class="lead" style="color :mediumspringgreen">Events Logs </legend>
+		
+                     <text id="eventslog"></text>
+                </div>            </div>        </div>    </div>
+<div class="col-lg-6" id="auction_owner_operations">
+<div class="well" style="background-color:mediumvioletred"> <div>
+<legend class="lead" style="color :mediumspringgreen">Charging Operations</legend>
+<button class="btn btn-default" id="transfer" type="button" onClick="cancel_auction()" style="color :mediumspringgreen">Cancel charging!</button>
+<button class="btn btn-default" id="transfer" type="button" onClick="Destruct_auction()" style="color :mediumspringgreen">Destruct contract!</button>
+</div></div></div>
+
+</body>
+</html>
